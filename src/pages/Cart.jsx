@@ -30,11 +30,10 @@ function Cart() {
   }
 
   const onClickOrder = () => {
-    alert('Ваш заказ:', items);
+    alert('Ваш заказ оформлен.');
   }
 
   return (
-    <div className="content">
       <div className="container container--cart">
         {totalCount ?
         <div className="cart">
@@ -95,15 +94,16 @@ function Cart() {
           <p>
             Вероятней всего, вы не заказывали ещё пиццу.<br />
             Для того, чтобы заказать пиццу, перейди на главную страницу.
-          </p>
-          <img src={emptyCartImage} alt="Empty cart" />
+            </p>
+            <div className="empty">
+              <img src={emptyCartImage} alt="Empty cart" />
+            </div>
           <Link to='/' className="button button--black">
             <span>Вернуться назад</span>
           </Link>
         </div>
         }
       </div>
-    </div>
   )
 }
 

@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import Button from './Button';
 
 function CartItem({
@@ -67,5 +69,23 @@ function CartItem({
     </div>
   )
 }
+
+CartItem.propTypes = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  types: PropTypes.arrayOf(PropTypes.number),
+  sizes: PropTypes.arrayOf(PropTypes.number),
+  onRemove: PropTypes.func,
+  onMinus: PropTypes.func,
+  onPlus: PropTypes.func,
+};
+
+CartItem.defaultProps = {
+  price: 0,
+  types: [],
+  sizes: [],
+};
 
 export default CartItem;

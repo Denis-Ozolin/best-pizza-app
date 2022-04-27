@@ -64,7 +64,7 @@ function SortPopup({ items, activeSortType, onClickSortType }) {
 SortPopup.propTypes = {
   activeSortType: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  // onClickSortType: PropTypes.func.isRequired,
+  onClickSortType: PropTypes.func.isRequired,
 };
 
 SortPopup.defaultProps = {items: []}

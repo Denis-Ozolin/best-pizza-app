@@ -16,6 +16,7 @@ function Button({onClick, className, outline, children}) {
 Button.propTypes = {
   onClick: PropTypes.func,
   className: PropTypes.string,
+  outline: PropTypes.bool,
 }
 
 export default Button;

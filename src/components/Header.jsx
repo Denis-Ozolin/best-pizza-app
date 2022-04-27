@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import Button from './Button';
 import logoSvg from '../assets/img/pizza-logo.svg';
 
@@ -59,6 +61,16 @@ function Header() {
       </div>
     </div>
   );
+}
+
+Header.propTypes = {
+  totalPrice: PropTypes.number,
+  totalCount: PropTypes.number,
+}
+
+Header.defaultProps = {
+  totalPrice: 0,
+  totalCount: 0,
 }
 
 export default Header;

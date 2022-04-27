@@ -6,7 +6,7 @@ const initialState = {
   totalCount: 0,
 };
 
-const getTotalPrice = arr => arr.reduce((summ, { price }) => summ + price, 0);
+const getTotalPrice = (arr) => arr.reduce((summ, { price }) => summ + price, 0);
 
 const cart = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -23,16 +23,15 @@ const cart = (state = initialState, { type, payload }) => {
         },
       };
 
-      const items = Object.values(newItems).map(obj => obj.items);
+      const items = Object.values(newItems).map((obj) => obj.items);
       const allPizzas = Object.values(items).reduce((acc, item) => [...acc, ...item], []);
       const totalPrice = getTotalPrice(allPizzas);
 
-      return {
-        ...state,
-        items: newItems,
-        totalCount: allPizzas.length,
-        totalPrice: totalPrice,
-      };
+      return produce(state, (draft) => {
+        draft.items = newItems;
+        draft.totalCount = allPizzas.length;
+        draft.totalPrice = totalPrice;
+      });
     }
 
     case 'CLEAR_CART': {
@@ -43,29 +42,29 @@ const cart = (state = initialState, { type, payload }) => {
       };
     }
     case 'REMOVE_CART_ITEM': {
-      const newItems = {
-        ...state.items,
-      };
+      const newItems = { ...state.items };
       const currentTotalPrice = newItems[payload].totalPrice;
       const currentTotalCount = newItems[payload].items.length;
       delete newItems[payload];
-      return {
-        ...state,
-        items: newItems,
-        totalPrice: state.totalPrice - currentTotalPrice,
-        totalCount: state.totalCount - currentTotalCount,
-      };
+
+      return produce(state, (draft) => {
+        draft.items = newItems;
+        draft.totalPrice = state.totalPrice - currentTotalPrice;
+        draft.totalCount = state.totalCount - currentTotalCount;
+      });
     }
     case 'MINUS_CART_ITEM': {
       const minCountPizzas = state.items[payload].items.length < 2;
       const itemsTotalPrice = state.items[payload].totalPrice;
       const itemPrice = state.items[payload].items[0].price;
 
-      return produce(state, draft => {
-        !minCountPizzas && draft.items[payload].items.pop();
-        !minCountPizzas && (draft.items[payload].totalPrice = itemsTotalPrice - itemPrice);
-        !minCountPizzas && (draft.totalPrice -= itemPrice);
-        !minCountPizzas && (draft.totalCount -= 1);
+      return produce(state, (draft) => {
+        if (!minCountPizzas) {
+          draft.items[payload].items.pop();
+          draft.items[payload].totalPrice = itemsTotalPrice - itemPrice;
+          draft.totalPrice -= itemPrice;
+          draft.totalCount -= 1;
+        }
       });
     }
 
@@ -73,7 +72,7 @@ const cart = (state = initialState, { type, payload }) => {
       const itemsTotalPrice = state.items[payload].totalPrice;
       const itemPrice = state.items[payload].items[0].price;
 
-      return produce(state, draft => {
+      return produce(state, (draft) => {
         draft.items[payload].items.push(draft.items[payload].items[0]);
         draft.items[payload].totalPrice = itemsTotalPrice + itemPrice;
         draft.totalPrice += itemPrice;
