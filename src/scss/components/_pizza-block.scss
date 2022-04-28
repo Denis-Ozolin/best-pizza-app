@@ -2,11 +2,14 @@
 
 .pizza-block {
   width: 280px;
+  padding: 4px 0;
   text-align: center;
-  margin-bottom: 65px;
+  margin-bottom: 40px;
+  border: 1px solid $background;
+  border-radius: 10px;
 
   &:not(:nth-of-type(4n)) {
-    margin-right: 3.6%;
+    margin-right: 6px;
   }
 
   &__image {
@@ -62,6 +65,7 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 20px;
+    padding: 0 10px;
   }
 
   &__price {
